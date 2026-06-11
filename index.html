@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aventura Musical - Notas no Pentagrama</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .pentagrama-line { stroke: #475569; stroke-width: 2; }
+        .note-circle { transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); cursor: pointer; }
+        .note-circle:hover { transform: scale(1.3); filter: brightness(1.2); }
+        .btn-note { transition: transform 0.2s, background-color 0.2s; }
+        .btn-note:hover { transform: translateY(-5px); }
+        .active-note { stroke: #fbbf24; stroke-width: 4; }
+    </style>
+</head>
+<body class="bg-indigo-50 min-h-screen p-4 md:p-8">
+
+    <div class="max-w-6xl mx-auto">
+        <header class="text-center mb-8">
+            <h1 class="text-4xl md:text-5xl font-extrabold text-indigo-900 mb-2">🎵 Aventura das Notas! 🎶</h1>
+            <p class="text-indigo-600 text-lg">Clique nos botões abaixo ou nas notas do pentagrama para aprender!</p>
+        </header>
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <!-- Pentagrama Interativo -->
+            <div class="lg:col-span-2 bg-white p-6 rounded-3xl shadow-xl border-4 border-indigo-100">
+                <h2 class="text-2xl font-bold text-indigo-800 mb-6 text-center" id="pentagram-title">Pentagrama</h2>
+                <svg viewBox="0 0 800 300" class="w-full">
+                    <!-- Linhas do Pentagrama -->
+                    <line x1="50" y1="100" x2="750" y2="100" class="pentagrama-line" />
+                    <line x1="50" y1="130" x2="750" y2="130" class="pentagrama-line" />
+                    <line x1="50" y1="160" x2="750" y2="160" class="pentagrama-line" />
+                    <line x1="50" y1="190" x2="750" y2="190" class="pentagrama-line" />
+                    <line x1="50" y1="220" x2="750" y2="220" class="pentagrama-line" />
+                    
+                    <!-- Notas (Representação Visual) -->
+                    <circle id="note-do" cx="150" cy="250" r="15" fill="#ef4444" class="note-circle" onclick="playNote('Dó')" />
+                    <circle id="note-re" cx="250" cy="235" r="15" fill="#f97316" class="note-circle" onclick="playNote('Ré')" />
+                    <circle id="note-mi" cx="350" cy="220" r="15" fill="#eab308" class="note-circle" onclick="playNote('Mi')" />
+                    <circle id="note-fa" cx="450" cy="205" r="15" fill="#22c55e" class="note-circle" onclick="playNote('Fá')" />
+                    <circle id="note-sol" cx="550" cy="190" r="15" fill="#3b82f6" class="note-circle" onclick="playNote('Sol')" />
+                </svg>
+                <div id="feedback" class="mt-6 text-center text-xl font-bold text-indigo-700 h-8">Selecione uma nota!</div>
+            </div>
+
+            <!-- Painel de Controle -->
+            <div class="bg-indigo-900 p-6 rounded-3xl text-white shadow-xl">
+                <h3 class="text-xl font-bold mb-4">Escolha a Nota:</h3>
+                <div class="grid grid-cols-2 gap-3">
+                    <button class="btn-note bg-red-500 p-3 rounded-xl font-bold" onclick="playNote('Dó')">Dó</button>
+                    <button class="btn-note bg-orange-500 p-3 rounded-xl font-bold" onclick="playNote('Ré')">Ré</button>
+                    <button class="btn-note bg-yellow-500 p-3 rounded-xl text-indigo-900 font-bold" onclick="playNote('Mi')">Mi</button>
+                    <button class="btn-note bg-green-500 p-3 rounded-xl font-bold" onclick="playNote('Fá')">Fá</button>
+                    <button class="btn-note bg-blue-500 p-3 rounded-xl font-bold" onclick="playNote('Sol')">Sol</button>
+                    <button class="btn-note bg-indigo-500 p-3 rounded-xl font-bold" onclick="playNote('Lá')">Lá</button>
+                    <button class="btn-note bg-purple-500 p-3 rounded-xl font-bold" onclick="playNote('Si')">Si</button>
+                    <button class="btn-note bg-pink-500 p-3 rounded-xl font-bold" onclick="toggleClef()">Mudar Clave</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentClef = 'Sol';
+
+        function playNote(note) {
+            const feedback = document.getElementById('feedback');
+            feedback.innerText = `Você tocou a nota: ${note}! 🎵`;
+            feedback.classList.add('animate-bounce');
+            setTimeout(() => feedback.classList.remove('animate-bounce'), 500);
+            
+            // Highlight visual na nota clicada (placeholder)
+            console.log("Som de " + note + " tocado!");
+        }
+
+        function toggleClef() {
+            currentClef = currentClef === 'Sol' ? 'Fá' : 'Sol';
+            document.getElementById('pentagram-title').innerText = `Pentagrama - Clave de ${currentClef}`;
+            alert("Mudando para a Clave de " + currentClef + "! As posições das notas mudaram.");
+        }
+    </script>
+</body>
+</html>
